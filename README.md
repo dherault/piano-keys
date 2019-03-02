@@ -21,7 +21,7 @@ hotkeys(element, 'up up down down left right left right b a', () => console.log(
 ```
 
 Available descriptors: 
-`ctrl shift alt cmd tab space up down left right plus`
+`ctrl shift alt altgr cmd enter tab space backspace escape capslock up down left right plus contextmenu delete insert pause home end numlock`
 
 ## License
 
