@@ -12,15 +12,15 @@ const keyCodes = {
   ArrowLeft: 'left',
   ArrowRight: 'right',
   '+': 'plus',
-  ',': 'comma',
+  ' ': 'space',
 }
 
 function hotkeys(element, keysDescription, handler) {
 
+  let keysArray
   let index = 0
   let rightOnTrack = false
   const keysDown = new Set()
-  let keysArray
 
   try {
     keysArray = keysDescription.split(' ').map(string => string.split('+'))

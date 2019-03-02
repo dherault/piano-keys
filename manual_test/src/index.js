@@ -16,3 +16,5 @@ hotkeys(document.documentElement, 'ctrl+q', () => console.log('!!!!!!!\nctrl+q\n
 hotkeys(document.documentElement, 'up up left left', () => console.log('!!!!!!!\nup up left left\n!!!!!!!'))
 hotkeys(document.documentElement, 'x down+right', () => console.log('!!!!!!!\nx down+right\n!!!!!!!'))
 hotkeys(document.documentElement, 'up+left down+right', () => console.log('!!!!!!!\nup+left down+right\n!!!!!!!'))
+hotkeys(document.documentElement, 'space', () => console.log('!!!!!!!\nspace\n!!!!!!!'))
+hotkeys(document.documentElement, 'ctrl+space', () => console.log('!!!!!!!\nctrl+space\n!!!!!!!'))
