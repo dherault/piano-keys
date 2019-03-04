@@ -1,6 +1,6 @@
 {
   "name": "piano-keys",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Handle any shortcut and hotkey in the broswer",
   "main": "index.js",
   "scripts": {
