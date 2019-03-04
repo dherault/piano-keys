@@ -31,6 +31,60 @@ test('it registers hotkeys', () => {
   expect(value).toBe(true)
 })
 
+test('it throw on incorrect keys description', () => {
+  document.body.innerHTML = `
+    <div id="hello">
+      Hello world
+    </div>
+  `
+
+  const element = document.getElementById('hello')
+
+  let error
+
+  try {
+    hotkeys(element, 5, () => null)
+  }
+  catch (err) {
+    error = err
+  }
+
+  expect(error).toBeTruthy()
+
+  error = null 
+
+  try {
+    hotkeys(element, 'a++', () => null)
+  }
+  catch (err) {
+    error = err
+  }
+
+  expect(error).toBeTruthy()
+
+  error = null 
+
+  try {
+    hotkeys(element, 'a   b', () => null)
+  }
+  catch (err) {
+    error = err
+  }
+
+  expect(error).toBeTruthy()
+
+  error = null 
+
+  try {
+    hotkeys(element, '+ +', () => null)
+  }
+  catch (err) {
+    error = err
+  }
+
+  expect(error).toBeTruthy()
+})
+
 test('it calls the handler on simple key combinaison', () => {
   let value = false
 

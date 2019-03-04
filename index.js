@@ -26,35 +26,39 @@ const keyCodes = {
   ' ': 'space',
 }
 
-function hotkeys(element, keysDescription, handler) {
+function pianoKeys(element, keysDescription, handler) {
 
-  let keysArray
+  let keysArrays
   let index = 0
   let rightOnTrack = false
-  const keysDown = new Set()
+  const downedKeys = new Set()
 
   try {
-    keysArray = keysDescription.split(' ').map(string => string.split('+'))
+    keysArrays = keysDescription.split(' ').map(string => string.split('+'))
   }
   catch (error) {
-    throw new Error('Incorrect hotkeys description')
+    throw new Error('Invalid keys description')
+  }
+
+  if (!keysArrays.length || keysArrays.some(array => !array.length || array.some(key => key === ''))) {
+    throw new Error('Invalid keys description')
   }
 
   const keyDownHandler = event => {
-    const nextKeys = keysArray[index]
+    const keys = keysArrays[index]
     const codedKey = keyCodes[event.key] || event.key
 
-    keysDown.add(codedKey)
+    downedKeys.add(codedKey)
 
-    if (nextKeys.every(key => keysDown.has(key))) {
+    if (keys.every(key => downedKeys.has(key))) {
       
-      if (index === keysArray.length - 1) {
+      if (index === keysArrays.length - 1) {
         return handler(event)
       }
 
       rightOnTrack = true
     }
-    else if (nextKeys.some(key => keysDown.has(key))) {
+    else if (keys.some(key => downedKeys.has(key))) {
       rightOnTrack = true
     }
     else {
@@ -66,14 +70,14 @@ function hotkeys(element, keysDescription, handler) {
   const keyUpHandler = event => {
     const codedKey = keyCodes[event.key] || event.key
 
-    if (keysDown.has(codedKey)) {
-      keysDown.delete(codedKey)
+    if (downedKeys.has(codedKey)) {
+      downedKeys.delete(codedKey)
     }
 
-    if (keysDown.size === 0 && rightOnTrack) {
+    if (downedKeys.size === 0 && rightOnTrack) {
       index++
 
-      if (index >= keysArray.length) {
+      if (index >= keysArrays.length) {
         index = 0
       }
     }
@@ -90,4 +94,4 @@ function hotkeys(element, keysDescription, handler) {
   }
 }
 
-module.exports = hotkeys
+module.exports = pianoKeys

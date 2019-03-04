@@ -4,7 +4,7 @@
   "description": "Handle any shortcut and hotkey in the broswer",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "repository": {
     "type": "git",
