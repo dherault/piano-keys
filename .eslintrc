@@ -39,6 +39,7 @@
     "padded-blocks": "off",
     "radix": "off",
     "semi": ["error", "never"],
+    "space-infix-ops": "error",
     "import/no-cycle": "off"
   },
   "env": {
