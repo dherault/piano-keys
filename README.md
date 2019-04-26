@@ -23,6 +23,12 @@ hotkeys(element, 'ctrl+b', () => console.log('bold'))
 hotkeys(element, 'ctrl+k 1', () => console.log('super settings'))
 hotkeys(element, 'up up down down left right left right b a', () => console.log('konami code'))
 
+// To fire the handler only once per keydown use the "fireOnce" option
+hotkeys(element, 'ctrl+a', () => console.log('select all'), { fireOnce: true })
+
+// To fire the handler on keyup use the "fireOnKeyUp" option
+hotkeys(element, '1 2 3', () => console.log('fire when 3 is released'), { fireOnKeyUp: true })
+
 // To unregister the listeners use the return function
 const unregisterHotkeys = hotkeys(element, 'a', () => console.log('pressed a'))
 
