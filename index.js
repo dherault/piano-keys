@@ -1,5 +1,3 @@
-/* global module */
-
 const keyCodes = {
   Alt: 'alt',
   AltGraph: 'altgr',
@@ -26,11 +24,13 @@ const keyCodes = {
   ' ': 'space',
 }
 
-function pianoKeys(element, keysDescription, handler) {
-
+function pianoKeys(element, keysDescription, handler, options = {}) {
   let keysArrays
   let index = 0
   let rightOnTrack = false
+  let hasFiredOnce = false
+  let shouldFireOnKeyUp = false
+  let history = []
   const downedKeys = new Set()
 
   try {
@@ -49,11 +49,23 @@ function pianoKeys(element, keysDescription, handler) {
     const codedKey = keyCodes[event.key] || event.key
 
     downedKeys.add(codedKey)
+    shouldFireOnKeyUp = false
 
     if (keys.every(key => downedKeys.has(key))) {
-      
       if (index === keysArrays.length - 1) {
-        return handler(event)
+        if (options.fireOnce && hasFiredOnce) {
+          return
+        }
+
+        history = []
+
+        if (!options.fireOnKeyUp) {
+          hasFiredOnce = true
+
+          return handler(event)
+        }
+
+        shouldFireOnKeyUp = true
       }
 
       rightOnTrack = true
@@ -62,12 +74,36 @@ function pianoKeys(element, keysDescription, handler) {
       rightOnTrack = true
     }
     else {
-      index = 0
       rightOnTrack = false
+      index = 0
+      for (let i = 0; i < history.length; i++) {
+        rightOnTrack = false
+        index = 0
+        for (let j = 0; j < history.length - i; j++) {
+          rightOnTrack = history[i + j].length === keysArrays[index].length && history[i + j].every((item, k) => keysArrays[index][k] === item)
+
+          if (rightOnTrack) index++
+          else break
+        }
+      }
     }
+
+    if (rightOnTrack) history.push(Array.from(downedKeys))
+    else history = []
   }
 
   const keyUpHandler = event => {
+    hasFiredOnce = false
+
+    if (shouldFireOnKeyUp) {
+      index = 0
+      rightOnTrack = false
+      shouldFireOnKeyUp = false
+      downedKeys.forEach(key => downedKeys.delete(key))
+
+      return handler(event)
+    }
+
     const codedKey = keyCodes[event.key] || event.key
 
     if (downedKeys.has(codedKey)) {
@@ -82,15 +118,24 @@ function pianoKeys(element, keysDescription, handler) {
       }
     }
   }
-  
+
+  // Prevent alt+tab from leaving alt active on focus
+  const windowFocusHandler = () => {
+    if (downedKeys.has('alt')) {
+      downedKeys.delete('alt')
+    }
+  }
+
   // Register events
   element.addEventListener('keydown', keyDownHandler)
   element.addEventListener('keyup', keyUpHandler)
+  window.addEventListener('focus', windowFocusHandler)
 
   // Return unregister function
   return () => {
     element.removeEventListener('keydown', keyDownHandler)
     element.removeEventListener('keyup', keyUpHandler)
+    window.removeEventListener('focus', windowFocusHandler)
   }
 }
 

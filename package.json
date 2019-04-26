@@ -1,31 +1,29 @@
 {
   "name": "piano-keys",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "Handle any shortcut and hotkey in the broswer",
   "main": "index.js",
-  "scripts": {
-    "test": "jest --coverage",
-    "lint": "eslint index.js index.test.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/dherault/piano-keys.git"
-  },
+  "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
+  "license": "MIT",
   "keywords": [
     "hotkey",
     "shortcut"
   ],
-  "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dherault/piano-keys.git"
+  },
   "bugs": {
     "url": "https://github.com/dherault/piano-keys/issues"
   },
   "homepage": "https://github.com/dherault/piano-keys#readme",
+  "scripts": {
+    "test": "jest --coverage",
+    "lint": "eslint ."
+  },
   "devDependencies": {
-    "babel-eslint": "^10.0.1",
-    "eslint": "^5.15.1",
-    "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.16.0",
-    "jest": "^24.3.1"
+    "eslint": "^5.16.0",
+    "eslint-config-dherault": "^1.0.0",
+    "jest": "^24.7.1"
   }
 }

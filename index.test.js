@@ -10,7 +10,7 @@ test('it registers hotkeys', () => {
 
   const element = document.getElementById('hello')
 
-  let error 
+  let error
   let value = false
 
   try {
@@ -51,7 +51,7 @@ test('it throw on incorrect keys description', () => {
 
   expect(error).toBeTruthy()
 
-  error = null 
+  error = null
 
   try {
     hotkeys(element, 'a++', () => null)
@@ -62,7 +62,7 @@ test('it throw on incorrect keys description', () => {
 
   expect(error).toBeTruthy()
 
-  error = null 
+  error = null
 
   try {
     hotkeys(element, 'a   b', () => null)
@@ -73,7 +73,7 @@ test('it throw on incorrect keys description', () => {
 
   expect(error).toBeTruthy()
 
-  error = null 
+  error = null
 
   try {
     hotkeys(element, '+ +', () => null)
@@ -112,9 +112,9 @@ test('it calls the handler on simple key combinaison', () => {
   expect(value).toBe(false)
 
   dispatchEvent('keydown', 'a')
-  
+
   expect(value).toBe(true)
-  
+
   dispatchEvent('keyup', 'a')
 
   value = false
@@ -155,9 +155,9 @@ test('it calls the handler on combined key combinaison', () => {
   expect(value).toBe(false)
 
   dispatchEvent('keydown', 'Control')
-  
+
   expect(value).toBe(false)
-  
+
   dispatchEvent('keydown', 'k')
 
   expect(value).toBe(true)
@@ -168,7 +168,6 @@ test('it calls the handler on combined key combinaison', () => {
 
   expect(value).toBe(false)
 })
-
 
 test('it calls the handler on complex key combinaison', () => {
   let value = false
@@ -200,38 +199,168 @@ test('it calls the handler on complex key combinaison', () => {
   expect(value).toBe(false)
 
   dispatchEvent('keydown', 'ArrowUp')
-  
+
   expect(value).toBe(false)
 
   dispatchEvent('keyup', 'ArrowUp')
-  
+
   expect(value).toBe(false)
 
   dispatchEvent('keydown', 'ArrowDown')
-  
+
   expect(value).toBe(false)
 
   dispatchEvent('keyup', 'ArrowDown')
-  
+
   expect(value).toBe(false)
 
   dispatchEvent('keydown', 'ArrowLeft')
-  
+
   expect(value).toBe(false)
 
   dispatchEvent('keyup', 'ArrowLeft')
-  
+
   expect(value).toBe(false)
 
   dispatchEvent('keydown', 'ArrowRight')
-  
+
   expect(value).toBe(true)
 
   value = false
 
   dispatchEvent('keyup', 'ArrowRight')
-  
+
   expect(value).toBe(false)
+})
+
+test('it calls the handler on complex key combinaison 2', () => {
+  let value = false
+
+  document.body.innerHTML = `
+    <div id="hello">
+      Hello world
+    </div>
+  `
+
+  const element = document.getElementById('hello')
+
+  const dispatchEvent = (type, key) => {
+    const event = new Event(type)
+
+    event.key = key
+
+    element.dispatchEvent(event)
+  }
+
+  hotkeys(element, 'up down left right', () => value = true)
+
+  dispatchEvent('keydown', 'ArrowUp')
+
+  expect(value).toBe(false)
+
+  dispatchEvent('keyup', 'ArrowUp')
+
+  expect(value).toBe(false)
+
+  dispatchEvent('keydown', 'ArrowUp')
+
+  expect(value).toBe(false)
+
+  dispatchEvent('keyup', 'ArrowUp')
+
+  expect(value).toBe(false)
+
+  dispatchEvent('keydown', 'ArrowDown')
+
+  expect(value).toBe(false)
+
+  dispatchEvent('keyup', 'ArrowDown')
+
+  expect(value).toBe(false)
+
+  dispatchEvent('keydown', 'ArrowLeft')
+
+  expect(value).toBe(false)
+
+  dispatchEvent('keyup', 'ArrowLeft')
+
+  expect(value).toBe(false)
+
+  dispatchEvent('keydown', 'ArrowRight')
+
+  expect(value).toBe(true)
+
+  value = false
+
+  dispatchEvent('keyup', 'ArrowRight')
+
+  expect(value).toBe(false)
+})
+
+test('it calls the handler on simple key combinaison with option fireOnce set to true', () => {
+  let value = false
+
+  document.body.innerHTML = `
+    <div id="hello">
+      Hello world
+    </div>
+  `
+
+  const element = document.getElementById('hello')
+
+  const dispatchEvent = (type, key) => {
+    const event = new Event(type)
+
+    event.key = key
+
+    element.dispatchEvent(event)
+  }
+
+  hotkeys(element, 'a', () => value = true, { fireOnce: true })
+
+  dispatchEvent('keydown', 'a')
+
+  expect(value).toBe(true)
+
+  value = false
+
+  dispatchEvent('keydown', 'a')
+
+  expect(value).toBe(false)
+
+  dispatchEvent('keyup', 'a')
+
+  expect(value).toBe(false)
+})
+
+test('it calls the handler on simple key combinaison with option fireOnKeyUp set to true', () => {
+  let value = false
+
+  document.body.innerHTML = `
+    <div id="hello">
+      Hello world
+    </div>
+  `
+
+  const element = document.getElementById('hello')
+
+  const dispatchEvent = (type, key) => {
+    const event = new Event(type)
+
+    event.key = key
+
+    element.dispatchEvent(event)
+  }
+
+  hotkeys(element, 'a', () => value = true, { fireOnKeyUp: true })
+
+  dispatchEvent('keydown', 'a')
+
+  expect(value).toBe(false)
+
+  dispatchEvent('keyup', 'a')
+
+  expect(value).toBe(true)
 })
 
 test('it unregisters hotkeys', () => {
@@ -246,9 +375,9 @@ test('it unregisters hotkeys', () => {
 
   const dispatchEvent = (type, key) => {
     const event = new Event(type)
-    
+
     event.key = key
-    
+
     element.dispatchEvent(event)
   }
 
