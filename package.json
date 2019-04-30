@@ -1,13 +1,15 @@
 {
   "name": "piano-keys",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Handle any shortcut and hotkey in the broswer",
   "main": "index.js",
   "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
   "license": "MIT",
   "keywords": [
     "hotkey",
-    "shortcut"
+    "hotkeys",
+    "shortcut",
+    "shortcuts"
   ],
   "repository": {
     "type": "git",
