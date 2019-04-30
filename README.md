@@ -4,7 +4,7 @@
 [![Build Status](https://travis-ci.org/dherault/piano-keys.svg?branch=master)](https://travis-ci.org/dherault/piano-keys)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
-A JavaScript shorcuts and hotkeys librairy in less than 3kb
+A JavaScript shorcuts and hotkeys librairy in 3KB (1KB gzipped).
 
 ## Installation
 
