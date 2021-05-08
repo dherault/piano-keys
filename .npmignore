@@ -1,8 +1,10 @@
 .vscode/
+coverage/
+README.md
+LICENSE
 .eslintrc
 index.html
 demo.js
 demo.bundle.js
 webpack.config.js
 index.test.js
-coverage/
