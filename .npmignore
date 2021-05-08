@@ -1,7 +1,5 @@
 .vscode/
 coverage/
-README.md
-LICENSE
 .eslintrc
 index.html
 demo.js

@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/piano-keys.svg)](https://badge.fury.io/js/piano-keys)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](#contributing)
 
-A JavaScript hotkeys librairy in less than 1KB gzipped.
+A JavaScript hotkeys librairy in less than 3KB.
 
 ## Installation
 
