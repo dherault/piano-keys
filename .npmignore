@@ -1,1 +1,7 @@
-manual_test/
+.vscode/
+.eslintrc
+index.html
+demo.js
+demo.bundle.js
+webpack.config.js
+index.test.js

@@ -1,7 +1,7 @@
-/* global require test expect */
-const hotkeys = require('./index')
+/* global test expect */
+const pianoKeys = require('./index.js')
 
-test('it registers hotkeys', () => {
+test('it registers pianoKeys', () => {
   document.body.innerHTML = `
     <div id="hello">
       Hello world
@@ -14,7 +14,7 @@ test('it registers hotkeys', () => {
   let value = false
 
   try {
-    hotkeys(element, 'a', () => value = true)
+    pianoKeys(element, 'a', () => value = true)
   }
   catch (err) {
     error = err
@@ -43,7 +43,7 @@ test('it throw on incorrect keys description', () => {
   let error
 
   try {
-    hotkeys(element, 5, () => null)
+    pianoKeys(element, 5, () => null)
   }
   catch (err) {
     error = err
@@ -54,7 +54,7 @@ test('it throw on incorrect keys description', () => {
   error = null
 
   try {
-    hotkeys(element, 'a++', () => null)
+    pianoKeys(element, 'a++', () => null)
   }
   catch (err) {
     error = err
@@ -65,7 +65,7 @@ test('it throw on incorrect keys description', () => {
   error = null
 
   try {
-    hotkeys(element, 'a   b', () => null)
+    pianoKeys(element, 'a   b', () => null)
   }
   catch (err) {
     error = err
@@ -76,7 +76,7 @@ test('it throw on incorrect keys description', () => {
   error = null
 
   try {
-    hotkeys(element, '+ +', () => null)
+    pianoKeys(element, '+ +', () => null)
   }
   catch (err) {
     error = err
@@ -104,7 +104,7 @@ test('it calls the handler on simple key combinaison', () => {
     element.dispatchEvent(event)
   }
 
-  hotkeys(element, 'a', () => value = true)
+  pianoKeys(element, 'a', () => value = true)
 
   dispatchEvent('keydown', 'b')
   dispatchEvent('keyup', 'b')
@@ -120,6 +120,7 @@ test('it calls the handler on simple key combinaison', () => {
   value = false
 
   dispatchEvent('keydown', 'b')
+  dispatchEvent('keyup', 'b')
   dispatchEvent('keydown', 'a')
 
   expect(value).toBe(true)
@@ -144,7 +145,7 @@ test('it calls the handler on combined key combinaison', () => {
     element.dispatchEvent(event)
   }
 
-  hotkeys(element, 'ctrl+k', () => value = true)
+  pianoKeys(element, 'ctrl+k', () => value = true)
 
   dispatchEvent('keydown', 'b')
 
@@ -188,7 +189,7 @@ test('it calls the handler on complex key combinaison', () => {
     element.dispatchEvent(event)
   }
 
-  hotkeys(element, 'up down left right', () => value = true)
+  pianoKeys(element, 'up down left right', () => value = true)
 
   dispatchEvent('keydown', 'b')
 
@@ -252,7 +253,7 @@ test('it calls the handler on complex key combinaison 2', () => {
     element.dispatchEvent(event)
   }
 
-  hotkeys(element, 'up down left right', () => value = true)
+  pianoKeys(element, 'up down left right', () => value = true)
 
   dispatchEvent('keydown', 'ArrowUp')
 
@@ -297,7 +298,7 @@ test('it calls the handler on complex key combinaison 2', () => {
   expect(value).toBe(false)
 })
 
-test('it calls the handler on simple key combinaison with option fireOnce set to true', () => {
+test('it calls the handler on simple key combinaison with option keyUp set to true', () => {
   let value = false
 
   document.body.innerHTML = `
@@ -316,43 +317,7 @@ test('it calls the handler on simple key combinaison with option fireOnce set to
     element.dispatchEvent(event)
   }
 
-  hotkeys(element, 'a', () => value = true, { fireOnce: true })
-
-  dispatchEvent('keydown', 'a')
-
-  expect(value).toBe(true)
-
-  value = false
-
-  dispatchEvent('keydown', 'a')
-
-  expect(value).toBe(false)
-
-  dispatchEvent('keyup', 'a')
-
-  expect(value).toBe(false)
-})
-
-test('it calls the handler on simple key combinaison with option fireOnKeyUp set to true', () => {
-  let value = false
-
-  document.body.innerHTML = `
-    <div id="hello">
-      Hello world
-    </div>
-  `
-
-  const element = document.getElementById('hello')
-
-  const dispatchEvent = (type, key) => {
-    const event = new Event(type)
-
-    event.key = key
-
-    element.dispatchEvent(event)
-  }
-
-  hotkeys(element, 'a', () => value = true, { fireOnKeyUp: true })
+  pianoKeys(element, 'a', () => value = true, true)
 
   dispatchEvent('keydown', 'a')
 
@@ -363,7 +328,7 @@ test('it calls the handler on simple key combinaison with option fireOnKeyUp set
   expect(value).toBe(true)
 })
 
-test('it unregisters hotkeys', () => {
+test('it unregisters pianoKeys', () => {
   document.body.innerHTML = `
     <div id="hello">
       Hello world
@@ -381,7 +346,7 @@ test('it unregisters hotkeys', () => {
     element.dispatchEvent(event)
   }
 
-  const unregister = hotkeys(element, 'a', () => value = true)
+  const unregister = pianoKeys(element, 'a', () => value = true)
 
   unregister()
 

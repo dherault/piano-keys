@@ -24,118 +24,66 @@ const keyCodes = {
   ' ': 'space',
 }
 
-function pianoKeys(element, keysDescription, handler, options = {}) {
-  let keysArrays
-  let index = 0
-  let rightOnTrack = false
-  let hasFiredOnce = false
-  let shouldFireOnKeyUp = false
-  let history = []
-  const downedKeys = new Set()
+const hashPattern = pattern => JSON.stringify(pattern.map(x => [...new Set(x)].sort()))
+
+function comparePattern(pattern, source) {
+  const sourceHash = hashPattern(source)
+
+  for (let i = 0; i < pattern.length - source.length + 1; i++) {
+    if (hashPattern(pattern.slice(i)) === sourceHash) return true
+  }
+}
+
+function pianoKeys(element, description, handler, keyUp) {
+  let keys
+  let pattern = [[]]
 
   try {
-    keysArrays = keysDescription.split(' ').map(string => string.split('+'))
+    keys = description.toLowerCase().split(' ').map(x => x.split('+'))
   }
   catch (error) {
     throw new Error('Invalid keys description')
   }
 
-  if (!keysArrays.length || keysArrays.some(array => !array.length || array.some(key => key === ''))) {
+  if (!keys.length || keys.some(x => !x.length || x.some(code => code === ''))) {
     throw new Error('Invalid keys description')
   }
 
-  const keyDownHandler = event => {
-    const keys = keysArrays[index]
-    const codedKey = keyCodes[event.key] || event.key
+  function handleKeyDown(event) {
+    const code = keyCodes[event.key] || event.key.toLowerCase()
 
-    downedKeys.add(codedKey)
-    shouldFireOnKeyUp = false
+    pattern[pattern.length - 1].push(code)
 
-    if (keys.every(key => downedKeys.has(key))) {
-      if (index === keysArrays.length - 1) {
-        if (options.fireOnce && hasFiredOnce) {
-          return
-        }
+    if (!keyUp && comparePattern(pattern, keys)) {
+      pattern = [[]]
 
-        history = []
-
-        if (!options.fireOnKeyUp) {
-          hasFiredOnce = true
-
-          return handler(event)
-        }
-
-        shouldFireOnKeyUp = true
-      }
-
-      rightOnTrack = true
+      return handler(event)
     }
-    else if (keys.some(key => downedKeys.has(key))) {
-      rightOnTrack = true
-    }
-    else {
-      rightOnTrack = false
-      index = 0
-      for (let i = 0; i < history.length; i++) {
-        rightOnTrack = false
-        index = 0
-        for (let j = 0; j < history.length - i; j++) {
-          rightOnTrack = history[i + j].length === keysArrays[index].length && history[i + j].every((item, k) => keysArrays[index][k] === item)
-
-          if (rightOnTrack) index++
-          else break
-        }
-      }
-    }
-
-    if (rightOnTrack) history.push(Array.from(downedKeys))
-    else history = []
   }
 
-  const keyUpHandler = event => {
-    hasFiredOnce = false
-
-    if (shouldFireOnKeyUp) {
-      index = 0
-      rightOnTrack = false
-      shouldFireOnKeyUp = false
-      downedKeys.forEach(key => downedKeys.delete(key))
+  function handleKeyUp(event) {
+    if (keyUp && comparePattern(pattern, keys)) {
+      pattern = [[]]
 
       return handler(event)
     }
 
-    const codedKey = keyCodes[event.key] || event.key
-
-    if (downedKeys.has(codedKey)) {
-      downedKeys.delete(codedKey)
+    if (pattern[pattern.length - 1].length) {
+      pattern.push([])
     }
 
-    if (downedKeys.size === 0 && rightOnTrack) {
-      index++
-
-      if (index >= keysArrays.length) {
-        index = 0
-      }
+    // Prevent memory leaks
+    if (pattern.length > keys.length) {
+      pattern = pattern.slice(pattern.length - keys.length)
     }
   }
 
-  // Prevent alt+tab from leaving alt active on focus
-  const windowFocusHandler = () => {
-    if (downedKeys.has('alt')) {
-      downedKeys.delete('alt')
-    }
-  }
+  element.addEventListener('keydown', handleKeyDown)
+  element.addEventListener('keyup', handleKeyUp)
 
-  // Register events
-  element.addEventListener('keydown', keyDownHandler)
-  element.addEventListener('keyup', keyUpHandler)
-  window.addEventListener('focus', windowFocusHandler)
-
-  // Return unregister function
   return () => {
-    element.removeEventListener('keydown', keyDownHandler)
-    element.removeEventListener('keyup', keyUpHandler)
-    window.removeEventListener('focus', windowFocusHandler)
+    element.removeEventListener('keydown', handleKeyDown)
+    element.removeEventListener('keyup', handleKeyUp)
   }
 }
 
