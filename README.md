@@ -32,6 +32,10 @@ unregisterHotkeys()
 Available descriptors:
 `ctrl shift alt altgr cmd enter tab space backspace escape capslock up down left right plus contextmenu delete insert pause home end numlock`
 
+## Usage with react
+
+Checkout [react-piano-keys](https://www.npmjs.com/package/react-piano-keys)
+
 ## Contributing
 
 Yes, thank you.

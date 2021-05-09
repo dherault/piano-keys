@@ -1,6 +1,6 @@
 {
   "name": "piano-keys",
-  "version": "2.0.4",
+  "version": "2.0.5",
   "description": "Handle any shortcut and hotkey in the broswer",
   "main": "index.js",
   "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
