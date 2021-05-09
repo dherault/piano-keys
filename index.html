@@ -1,18 +1,55 @@
-<ul>
-  <li>a</li>
-  <li>shift+a</li>
-  <li>b+c</li>
-  <li>d e</li>
-  <li>ctrl+q</li>
-  <li>up up left left</li>
-  <li>x down+right </li>
-  <li>up+left down+right</li>
-  <li>space</li>
-  <li>ctrl+space</li>
-  <li>s (keyUp)</li>
-  <li>f f g (keyUp)</li>
-  <li>up+a down+z (keyUp)</li>
-</ul>
-
-<script type="text/javascript" src="demo.bundle.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mpxx@3.0.0/mpxx.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flexpad@3.0.0/dist/flexpad.min.css">
+    <style>
+      body {
+        font-family: sans-serif;
+      }
+      h1 {
+        color: goldenrod;
+      }
+      pre {
+        background-color: #eee;
+        border-radius: 4px;
+        height: 164px;
+        overflow: auto;
+      }
+      .w100 {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body class="py-2 px-4">
+    <h1 class="m-0">
+      Piano-keys
+    </h1>
+    <div class="mt-2 x1 w100">
+      <div class="y2s">
+        <strong>
+          Shortcuts
+        </strong>
+        <ul class="mt-1">
+          <li>a</li>
+          <li>shift+a</li>
+          <li>ctrl+q</li>
+          <li>b+c</li>
+          <li>d e</li>
+          <li>up up left left</li>
+          <li>x down+right </li>
+          <li>up+left down+right</li>
+          <li>s (on keyup)</li>
+          <li>f f g (on keyup)</li>
+          <li>up+a down+z (on keyup)</li>
+        </ul>
+      </div>
+      <div class="ml-4 y2s flex-grow">
+        <strong>Output</strong>
+        <pre class="p-2 mt-1h"></pre>
+      </div>
+    </div>
+    <script type="text/javascript" src="demo.bundle.js"></script>
+  </body>
+</html>

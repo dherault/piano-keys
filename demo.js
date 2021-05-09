@@ -1,15 +1,25 @@
 const pianoKeys = require('./index.js')
 
-pianoKeys(document.documentElement, 'a', () => console.log('a'))
-pianoKeys(document.documentElement, 'shift+a', () => console.log('shift+a'))
-pianoKeys(document.documentElement, 'b+c', () => console.log('b+c'))
-pianoKeys(document.documentElement, 'd e', () => console.log('d e'))
-pianoKeys(document.documentElement, 'ctrl+q', () => console.log('ctrl+q'))
-pianoKeys(document.documentElement, 'up up left left', () => console.log('up up left left'))
-pianoKeys(document.documentElement, 'x down+right', () => console.log('x down+right'))
-pianoKeys(document.documentElement, 'up+left down+right', () => console.log('up+left down+right'))
-pianoKeys(document.documentElement, 'space', () => console.log('space'))
-pianoKeys(document.documentElement, 'ctrl+space', () => console.log('ctrl+space'))
-pianoKeys(document.documentElement, 's', () => console.log('s'), true)
-pianoKeys(document.documentElement, 'f f g', () => console.log('f f g'), true)
-pianoKeys(document.documentElement, 'up+a down+z', () => console.log('up+a down+z'), true)
+const pre = document.getElementsByTagName('pre')[0]
+
+function output(string) {
+  pre.innerHTML = `${string}\n${pre.innerHTML}`
+}
+
+function register(description) {
+  pianoKeys(window, description, () => output(description))
+}
+
+register('a')
+register('shift+a')
+register('b+c')
+register('d e')
+register('ctrl+q')
+register('up up left left')
+register('x down+right')
+register('up+left down+right')
+register('space')
+register('ctrl+space')
+register('s')
+register('f f g')
+register('up+a down+z')
