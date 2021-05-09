@@ -6,8 +6,8 @@ function output(string) {
   pre.innerHTML = `${string}\n${pre.innerHTML}`
 }
 
-function register(description) {
-  pianoKeys(window, description, () => output(description))
+function register(description, keyup) {
+  pianoKeys(window, description, () => output(description), keyup)
 }
 
 register('a')
@@ -20,6 +20,6 @@ register('x down+right')
 register('up+left down+right')
 register('space')
 register('ctrl+space')
-register('s')
-register('f f g')
-register('up+a down+z')
+register('s', true)
+register('f f g', true)
+register('up+a down+z', true)
