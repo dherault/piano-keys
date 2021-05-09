@@ -5,6 +5,8 @@
 
 A JavaScript hotkeys librairy in less than 3KB.
 
+Checkout the [demo](https://dherault.github.io/piano-keys/)!
+
 ## Installation
 
 ```
