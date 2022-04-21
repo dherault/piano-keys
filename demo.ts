@@ -1,12 +1,12 @@
-const pianoKeys = require('./index.js')
+import pianoKeys from './src/index'
 
 const pre = document.getElementsByTagName('pre')[0]
 
-function output(string) {
+function output(string: string) {
   pre.innerHTML = `${string}\n${pre.innerHTML}`
 }
 
-function register(description, keyup) {
+function register(description: string, keyup?: boolean) {
   pianoKeys(window, description, () => output(description), keyup)
 }
 

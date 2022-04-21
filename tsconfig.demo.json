@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "target": "ES5",
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "noImplicitAny": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "outDir": "demo",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "paths": {
+      "*": ["node_modules/*"],
+    },
+    "lib": [
+      "ES5",
+      "DOM"
+    ],
+    "suppressImplicitAnyIndexErrors": true,
+  },
+  "include": ["demo.js"],
+  "downlevelIteration": true
+}

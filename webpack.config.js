@@ -1,9 +1,22 @@
+const path = require('path') // eslint-disable-line
+
 module.exports = {
-  mode: 'development',
-  entry: './demo.js',
-  output: {
-    filename: 'demo.bundle.js',
-    path: __dirname,
+  entry: './demo.ts',
+  mode: 'production',
+  module: {
+    rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+    ],
   },
-  devtool: 'eval-cheap-module-source-map',
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'demo'),
+  },
 }

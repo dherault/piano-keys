@@ -1,5 +1,9 @@
 /* global test expect */
-const pianoKeys = require('./index.js')
+import pianoKeys from '../src/index'
+
+type KeyEvent = Event & {
+  key?: string
+}
 
 test('it registers pianoKeys', () => {
   document.body.innerHTML = `
@@ -22,7 +26,7 @@ test('it registers pianoKeys', () => {
 
   expect(error).toBe(undefined)
 
-  const event = new Event('keydown')
+  const event = new Event('keydown') as KeyEvent
 
   event.key = 'a'
 
@@ -43,6 +47,7 @@ test('it throw on incorrect keys description', () => {
   let error
 
   try {
+    // @ts-ignore
     pianoKeys(element, 5, () => null)
   }
   catch (err) {
@@ -96,8 +101,8 @@ test('it calls the handler on simple key combinaison', () => {
 
   const element = document.getElementById('hello')
 
-  const dispatchEvent = (type, key) => {
-    const event = new Event(type)
+  const dispatchEvent = (type: any, key: any) => {
+    const event = new Event(type) as KeyEvent
 
     event.key = key
 
@@ -137,8 +142,8 @@ test('it calls the handler on combined key combinaison', () => {
 
   const element = document.getElementById('hello')
 
-  const dispatchEvent = (type, key) => {
-    const event = new Event(type)
+  const dispatchEvent = (type: any, key: any) => {
+    const event = new Event(type) as KeyEvent
 
     event.key = key
 
@@ -181,8 +186,8 @@ test('it calls the handler on complex key combinaison', () => {
 
   const element = document.getElementById('hello')
 
-  const dispatchEvent = (type, key) => {
-    const event = new Event(type)
+  const dispatchEvent = (type: any, key: any) => {
+    const event = new Event(type) as KeyEvent
 
     event.key = key
 
@@ -245,8 +250,8 @@ test('it calls the handler on complex key combinaison 2', () => {
 
   const element = document.getElementById('hello')
 
-  const dispatchEvent = (type, key) => {
-    const event = new Event(type)
+  const dispatchEvent = (type: any, key: any) => {
+    const event = new Event(type) as KeyEvent
 
     event.key = key
 
@@ -309,8 +314,8 @@ test('it calls the handler on simple key combinaison with option keyUp set to tr
 
   const element = document.getElementById('hello')
 
-  const dispatchEvent = (type, key) => {
-    const event = new Event(type)
+  const dispatchEvent = (type: any, key: any) => {
+    const event = new Event(type) as KeyEvent
 
     event.key = key
 
@@ -338,8 +343,8 @@ test('it unregisters pianoKeys', () => {
   let value = false
   const element = document.getElementById('hello')
 
-  const dispatchEvent = (type, key) => {
-    const event = new Event(type)
+  const dispatchEvent = (type: any, key: any) => {
+    const event = new Event(type) as KeyEvent
 
     event.key = key
 

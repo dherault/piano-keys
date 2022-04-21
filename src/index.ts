@@ -22,11 +22,14 @@ const keyCodes = {
   Tab: 'tab',
   '+': 'plus',
   ' ': 'space',
-}
+} as const
 
-const hashPattern = pattern => JSON.stringify(pattern.map(x => [...new Set(x)].sort()))
+type HandlerType = (event: KeyboardEvent) => void
+type PatternType = string[][]
 
-function comparePattern(pattern, source) {
+const hashPattern = (pattern: PatternType) => JSON.stringify(pattern.map(x => [...new Set(x)].sort()))
+
+function comparePattern(pattern: PatternType, source: PatternType) {
   const sourceHash = hashPattern(source)
 
   for (let i = 0; i < pattern.length - source.length + 1; i++) {
@@ -34,9 +37,9 @@ function comparePattern(pattern, source) {
   }
 }
 
-function pianoKeys(element, description, handler, keyUp) {
-  let keys
-  let pattern = [[]]
+function pianoKeys(element: HTMLElement | Window | Document, description: string, handler: HandlerType, keyUp?: boolean) {
+  let keys: PatternType
+  let pattern: PatternType = [[]]
 
   try {
     keys = description.toLowerCase().split(' ').map(x => x.split('+'))
@@ -49,7 +52,7 @@ function pianoKeys(element, description, handler, keyUp) {
     throw new Error('Invalid keys description')
   }
 
-  function handleKeyDown(event) {
+  function handleKeyDown(event: KeyboardEvent) {
     const code = keyCodes[event.key] || event.key.toLowerCase()
 
     pattern[pattern.length - 1].push(code)
@@ -61,7 +64,7 @@ function pianoKeys(element, description, handler, keyUp) {
     }
   }
 
-  function handleKeyUp(event) {
+  function handleKeyUp(event: KeyboardEvent) {
     if (keyUp && comparePattern(pattern, keys)) {
       pattern = [[]]
 
@@ -87,4 +90,4 @@ function pianoKeys(element, description, handler, keyUp) {
   }
 }
 
-module.exports = pianoKeys
+export default pianoKeys

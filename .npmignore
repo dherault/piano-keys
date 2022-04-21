@@ -1,8 +1,0 @@
-.vscode/
-coverage/
-.eslintrc
-index.html
-demo.js
-demo.bundle.js
-webpack.config.js
-index.test.js

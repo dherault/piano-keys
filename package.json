@@ -1,8 +1,21 @@
 {
   "name": "piano-keys",
-  "version": "2.0.6",
+  "version": "2.1.0",
   "description": "Handle any shortcut and hotkey in the broswer",
-  "main": "index.js",
+  "scripts": {
+    "test": "jest --coverage",
+    "build": "npm run build:module && npm run build:demo",
+    "build:module": "rimraf dist && npx tsc --declaration",
+    "build:demo": "rimraf demo && webpack",
+    "start:watch": "nodemon --watch index.js --watch demo.js --exec npm run build",
+    "dev": "npx serve",
+    "prepublishOnly": "npm run test && npm run build"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist/**/*",
+    "src/**/*"
+  ],
   "author": "David Hérault <dherault@gmail.com> (https://github.com/dherault)",
   "license": "MIT",
   "keywords": [
@@ -19,18 +32,21 @@
     "url": "https://github.com/dherault/piano-keys/issues"
   },
   "homepage": "https://github.com/dherault/piano-keys#readme",
-  "scripts": {
-    "test": "jest --coverage",
-    "build": "webpack",
-    "watch": "nodemon --watch index.js --watch demo.js --exec npm run build",
-    "dev": "python3 -m http.server"
-  },
   "devDependencies": {
-    "eslint": "^7.26.0",
-    "eslint-config-dherault": "^1.6.0",
-    "jest": "^26.6.3",
-    "nodemon": "^2.0.7",
-    "webpack": "^5.36.2",
-    "webpack-cli": "^4.7.0"
+    "@babel/core": "^7.17.9",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/preset-env": "^7.16.11",
+    "@types/jest": "^27.4.1",
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "eslint-config-dherault": "^1.7.3",
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.4",
+    "ts-loader": "^9.2.8",
+    "typescript": "^4.6.3",
+    "webpack": "^5.72.0",
+    "webpack-cli": "^4.9.2"
   }
 }
